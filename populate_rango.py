@@ -12,21 +12,25 @@ def populate():
 
     add_page(cat=python_cat,
         title="Official Python Tutorial",
-        url="http://docs.python.org/2/tutorial/")
+        url="http://docs.python.org/2/tutorial/",
+        views=20)
 
     add_page(cat=python_cat,
              title="How to Think Like A Computer Scientist",
-             url="http://greenteapress.com/thinkpython")
+             url="http://greenteapress.com/thinkpython",
+             views=9)
 
     add_page(cat=python_cat,
              title="Learn Python in 10 Minutes",
-             url="http://www.korokithakis.net/tutorials/python/")
+             url="http://www.korokithakis.net/tutorials/python/",
+             views=46)
 
     django_cat = add_cat(name="Django", views=64, likes=32)
 
     add_page(cat=django_cat,
              title="Official Django Tutorial",
-             url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/")
+             url="https://docs.djangoproject.com/en/1.5/intro/tutorial01/",
+             views=267)
 
     add_page(cat=django_cat,
              title="Django Rocks",
@@ -34,17 +38,20 @@ def populate():
 
     add_page(cat=django_cat,
              title="How to Tango with Django",
-             url="http://www.tangowithdjango.com/")
+             url="http://www.tangowithdjango.com/",
+             views=56742)
 
     frame_cat = add_cat(name="Other Frameworks", views=32, likes=16)
 
     add_page(cat=frame_cat,
              title="Bottle",
-             url="http://bottlepy.org/docs/dev/")
+             url="http://bottlepy.org/docs/dev/",
+             views=1)
 
     add_page(cat=frame_cat,
              title="Flask",
-             url="http://flask.pocoo.org")
+             url="http://flask.pocoo.org",
+             views=1337)
 
     # Print out what we have added to the user.
     for c in Category.objects.all():

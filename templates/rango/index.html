@@ -9,11 +9,20 @@
         <h1>Rango says…hello, world!</h1>
 
         {% if categories %}
+            <h3>Here are the page categories:</h3>
             <ul>
                 {% for category in categories %}
                 <li><a href="/rango/category/{{ category.slug }}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
+            <br/>
+            <h3>Here are the most popular pages:</h3>
+            <ul>
+                {% for page in popular_pages %}
+                <li><a href="{{ page.url }}">{{ page.title }}</a> ({{ page.views }} views)</li>
+                {% endfor %}
+            </ul>
+
         {% else %}
             <strong>There are no categories present. Whaaaaat?</strong>
         {% endif %}
