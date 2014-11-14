@@ -12,7 +12,7 @@
             <h3>Here are the page categories:</h3>
             <ul>
                 {% for category in categories %}
-                <li><a href={% url 'category' category.slug %}">{{ category.name }}</a></li>
+                <li><a href="{% url 'category' category.slug %}/">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
             <br/>
