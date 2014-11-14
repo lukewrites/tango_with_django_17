@@ -59,3 +59,7 @@ def add_category(request):
     else:
         # it's not a POST request, so display the form.
         form = CategoryForm()
+
+    # bad form, bad form details, no form supplied...
+    # render the form with error messages, if there are any.
+    return render(request, 'rango/add_category.html', {'form': form})

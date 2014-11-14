@@ -17,7 +17,7 @@ class CategoryForm(forms.ModelForm):
 
 
 class PageForm(forms.ModelForm):
-    title = forms.Charfield(max_length=128, help_text="Please enter the page name.")
+    title = forms.CharField(max_length=128, help_text="Please enter the page name.")
     url = forms.URLField(max_length=200, help_text="Please enter the page URL.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
