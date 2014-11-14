@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm
+from django.http import Http404
 
 
 def index(request):
@@ -37,7 +38,7 @@ def category(request, category_name_slug):
         context_dict['pages'] = pages
         context_dict['category'] = category
     except Category.DoesNotExist:
-        pass  # we don't need to do this because it's handled in the template!
+        raise Http404
     return render(request, 'rango/category.html', context_dict)
 
 
