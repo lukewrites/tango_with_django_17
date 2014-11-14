@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category, Page
+from rango.forms import CategoryForm
 
 
 def index(request):
@@ -15,6 +16,7 @@ def index(request):
     context_dict = {'categories': category_list, 'popular_pages': page_list}
 
     return render(request, 'rango/index.html', context_dict)
+
 
 def about(request):
     return render(request, 'rango/about.html')
@@ -37,3 +39,23 @@ def category(request, category_name_slug):
     except Category.DoesNotExist:
         pass  # we don't need to do this because it's handled in the template!
     return render(request, 'rango/category.html', context_dict)
+
+
+def add_category(request):
+    # is it a HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+
+        # is the form valid?
+        if form.is_valid():
+            # save the new category
+            form.save(commit=True)
+
+            # call the index view & show the user the homepage
+            return index(request)
+        else:
+            # if the form has errors, print them
+            print(form.errors)
+    else:
+        # it's not a POST request, so display the form.
+        form = CategoryForm()
