@@ -44,4 +44,4 @@ class PageForm(forms.ModelForm):
             cleaned_data['url'] = url
         # we always have to end the clean() method by returning the cleaned_data dictionary.
         # always, always, always, always, always.
-        return = cleaned_data
+        return cleaned_data
