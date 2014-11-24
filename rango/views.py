@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from rango.models import Category, Page
-from rango.forms import CategoryForm
+from rango.forms import CategoryForm, PageForm
 from django.http import Http404
 
 
@@ -83,7 +83,7 @@ def add_page(request, category_name_slug):
 
                 return category(request, category_name_slug)
             else:
-                print form.errors
+                print(form.errors)
         else:
             form = PageForm()
     return render(request, 'rango/add_page.html', context_dict)
