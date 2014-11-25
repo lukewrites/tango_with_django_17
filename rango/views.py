@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rango.models import Category, Page
-from rango.forms import CategoryForm, PageForm
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import Http404
 
 
@@ -86,3 +86,53 @@ def add_page(request, category_name_slug):
         form = PageForm()
     context_dict = {'form': form, 'category': cat}
     return render(request, 'rango/add_page.html', context_dict)
+
+
+def register(request):
+
+    # A boolean value for telling the template whether the registration was successful.
+    # Set to False initially. Code changes value to True when registration succeeds.
+    registered = False
+
+    # if it's a HTTP POST, we're interested in processing form data.
+    if request.method == 'POST':
+        # attempt to grab info from raw form
+        # we make use of both UserForm and UserProfileForm
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        # if the two forms are valid...
+        if user_form.is_valid() and profile_form.is_valid():
+            # ... we save the form data to the db.
+            user = user_form.save()
+
+            # Now we hash the password using set_password method.
+            # we update the user object once the pw is hashed
+            user.set_password(user.password)
+            user.save()
+
+            # Now we work with the UserProfile instance.
+            # We set the user attribute ourselves, so we set commit=False
+            # so it won't save until we're ready to save
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # Did they provide a picture?
+            # If they did we need to get it from the form and put it in the model.
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            # Now we save the UserProfile model instance.
+            profile.save()
+
+            # Registration is complete, so we change our registered variable to show this.
+            registered = True
+        # If the form isn't valid, info is missing, or there are mistakes, we show errors.
+        else:
+            print(user_form.errors, profile_form.errors)
+    # if it's not POST we'll show our blank forms.
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    return render(request, 'rango/register.html', {'user_form': user_form, 'profile_form': profile_form})
