@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm
 from django.http import Http404
@@ -37,7 +36,7 @@ def category(request, category_name_slug):
         # and then we add them to our context_dict dictionary.
         context_dict['pages'] = pages
         context_dict['category'] = category
-        context_dict['context_name_slug'] = category_name_slug
+        context_dict['context_name_slug'] = category
     except Category.DoesNotExist:
         raise Http404
     return render(request, 'rango/category.html', context_dict)
@@ -80,10 +79,10 @@ def add_page(request, category_name_slug):
                 page.category = cat
                 page.views = 0
                 page.save()
-
                 return category(request, category_name_slug)
             else:
                 print(form.errors)
         else:
             form = PageForm()
+        context_dict = {'form': form, 'category': cat}
     return render(request, 'rango/add_page.html', context_dict)
