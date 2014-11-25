@@ -31,7 +31,7 @@ class Page(models.Model):
 
 
 class UserProfile(models.Model):
-    # this line is required. links the UserProfile to a Usermodel instance.
+    # this line is required. links the UserProfile to a UserModel instance.
     user = models.OneToOneField(User)
 
     # the additional attributes we wish to include
