@@ -67,7 +67,6 @@ def add_category(request):
 
 
 def add_page(request, category_name_slug):
-    # context_dict = {'category_name_slug': category_name_slug}
     try:
         cat = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
@@ -77,11 +76,10 @@ def add_page(request, category_name_slug):
         if form.is_valid():
             if cat:
                 page = form.save(commit=False)
-                page.category = cat
                 page.views = 0
-                page.save(commit=True)
-                return redirect()
-                request('category', category)
+                page.category = cat
+                page.save()
+                return index(request)
         else:
             print(form.errors)
     else:

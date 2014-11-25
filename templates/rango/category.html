@@ -13,11 +13,12 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <strong>No pages currently in category.</strong>
+            <strong>No pages currently in category.</strong><br />
             {% endif %}
         {% else %}
             The specified category {{ category_name }} does not exist.
         {% endif %}
-    <a href="{% url 'add_page' category.slug %}">Add a new page</a>
+    <a href="{% url 'add_page' category.slug %}">Add a new page</a><br />
+    <a href="{% url 'index' %}">Home</a>
     </body>
 </html>

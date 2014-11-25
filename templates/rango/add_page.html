@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Add a page to {{ category.category_name }}</title>
+        <title>Add a page to {{ category }}</title>
     </head>
 
     <body>
-        <h1>Add a page to {{ category.category_name }}</h1>
-        <form id="page_form" method="post" action="/rango/add_page/">
+    {% if category %}
+        <h1>Add a page to {{ category }}</h1>
+        <form id="page_form" method="post" action="/rango/category/{{ category }}/">
             {% csrf_token %}
 
-            {% if category %}
+
                 {% for hidden in form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
@@ -17,14 +18,14 @@
                 {% for field in form.visible_fields %}
                     {{ field.errors }}
                     {{ field.help_text }}
-                    {{ field }}
-                {% endfor %}
-            {% else %}
-                     <p>Sorry, that category doesn't exist. Maybe try again.</p>
-                {% endif %}
-
-            <input type="submit" name="submit" value="Create Category" />
+                    {{ field }}<br />
+                {% endfor %} <br />
+        <input type="submit" name="submit" value="Create Page" />
         </form>
+    {% else %}
+        <h1>Sorry, that category doesn't exist.</h1>
+        <p>Maybe try again.</p>
+    {% endif %}
     </body>
 
 </html>

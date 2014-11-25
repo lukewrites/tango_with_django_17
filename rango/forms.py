@@ -20,6 +20,7 @@ class PageForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the page name.")
     url = forms.URLField(max_length=200, help_text="Please enter the page URL.")
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    category = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Page
@@ -29,7 +30,9 @@ class PageForm(forms.ModelForm):
         # We can do it by either listing the fields we want to include
         # (like with did about with fields=())
         # or we can tell it which fields _not_ to include, using...
-        exclude = ('category', )
+        exclude = ('category', 'views')
+        # and in dj 1.7 it's necessary to say which fields are included using...
+        fields = ('title', 'url')
 
     def clean(self):
         cleaned_data = self.cleaned_data
