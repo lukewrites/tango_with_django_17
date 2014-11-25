@@ -30,10 +30,10 @@ class PageForm(forms.ModelForm):
         # We can do it by either listing the fields we want to include
         # (like with did about with fields=())
         # or we can tell it which fields _not_ to include, using...
-        # exclude = ('category', 'views')
-        ## TODO I THINK I FIXED THIS. NEED TO MIGRATE AND TRY THE add_page() again.
+        # exclude = ('whatever')
         # and in dj 1.7 it's necessary to say which fields are included using...
         fields = ('title', 'url')
+        # Do NOT include
 
     def clean(self):
         cleaned_data = self.cleaned_data
