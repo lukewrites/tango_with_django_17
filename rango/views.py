@@ -3,6 +3,7 @@ from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import Http404
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -166,3 +167,8 @@ def user_login(request):
         # it's not a POST request, so display the login form
         return render(request, 'rango/login.html', {})
         # it's got a blank dictionary b/c there are no variable to pass to the template.
+
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you're logged in, you can see this text!")
