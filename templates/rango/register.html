@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>It's Rango, bitches</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% block body_block %}
     <h1>Register with Rango</h1><br />
     {% if registered %}
         Rango says: <strong>Thank you for registering!</strong><br />
@@ -18,5 +15,4 @@
         </form>
         <a href="/rango/">Return to the homepage.</a>
     {% endif %}
-</body>
-</html>
+{% endblock %}
