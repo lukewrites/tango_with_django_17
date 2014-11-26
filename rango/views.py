@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from django.http import Http404
+from django.contrib.auth import authenticate, login
 
 
 def index(request):
@@ -71,20 +72,21 @@ def add_page(request, category_name_slug):
         cat = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         cat = None
+
     if request.method == 'POST':
         form = PageForm(request.POST)
         if form.is_valid():
             if cat:
                 page = form.save(commit=False)
-                page.views = 0
                 page.category = cat
+                page.views = 0
                 page.save()
-                return index(request)
+                return category(request, category_name_slug)
         else:
             print(form.errors)
     else:
         form = PageForm()
-    context_dict = {'form': form, 'category': category_name_slug}
+    context_dict = {'form': form, 'category': cat}
     return render(request, 'rango/add_page.html', context_dict)
 
 
@@ -136,3 +138,31 @@ def register(request):
         profile_form = UserProfileForm()
 
     return render(request, 'rango/register.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+def user_login(request):
+
+    # If the request if POST, try to pull relevant information.
+    if request.method == 'POST':
+        # get the username and password from the form
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # use django to see if the username/pw is valid. If it is, return User object
+        user = authenticate(username=username, password=password)
+
+        if user:
+            # is the user active?
+            if user.is_active:
+                # login and redirect to homepage
+                login(request, user)
+                return HttpResponseRedirect('/rango/')
+        else:
+            # if the login credentials didn't pull up a User object
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        # it's not a POST request, so display the login form
+        return render(request, 'rango/login.html', {})
+        # it's got a blank dictionary b/c there are no variable to pass to the template.

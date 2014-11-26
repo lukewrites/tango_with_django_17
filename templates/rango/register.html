@@ -10,11 +10,11 @@
         <a href="/rango/">Return to the homepage.</a>
     {% else %}
         Rango says: <strong>Register here and now!</strong><br />
-        <form id="user_form" method="post" action="rango/register/" enctype="multipart/form-data">
+        <form id="user_form" method="post" action="/rango/" enctype="multipart/form-data">
             {% csrf_token %}
             {{ user_form.as_p }} <!-- as_p wraps each element in <p></p> -->
             {{ profile_form.as_p }}
-            <input type="submit" value="Register" />
+            <input type="submit" name="submit" value="Register" />
         </form>
         <a href="/rango/">Return to the homepage.</a>
     {% endif %}
