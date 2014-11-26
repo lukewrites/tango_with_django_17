@@ -13,9 +13,9 @@
                 {% for field in form.visible_fields %}
                     {{ field.errors }}
                     {{ field.help_text }}
-                    {{ field }}<br />
-                {% endfor %} <br />
-        <input type="submit" name="submit" value="Create Page" />
+                    {{ field }}
+                {% endfor %}
+        <button type="submit" name="submit">Create page</button>
         </form>
     {% else %}
         <h1>Sorry, that category doesn't exist.</h1>

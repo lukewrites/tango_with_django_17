@@ -25,6 +25,7 @@ class PageForm(forms.ModelForm):
 
     class Meta:
         model = Page
+        # exclude = ('category',)
 
         # What fields do we want to include in our form?
         # This way we don't need every field in the model present.
