@@ -37,20 +37,20 @@ class PageForm(forms.ModelForm):
         fields = ('title', 'url')
         # Do NOT include
 
-    # def clean(self):
-    #     cleaned_data = self.cleaned_data
-    #     # cleaned_data is a ModelForm dictionary attribute.
-    #     url = cleaned_data.get('url')
-    #     # we use the dictionary.get() method to get the form's value for url
-    #
-    #     # if url isn't empty and doesn't start with http://
-    #     if url and not url.startswith('http://'):
-    #         url = 'http://' + url
-    #         # we reassign the value in the dictionary with our new, clean url
-    #         cleaned_data['url'] = url
-    #     # we always have to end the clean() method by returning the cleaned_data dictionary.
-    #     # always, always, always, always, always.
-    #     return cleaned_data
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        # cleaned_data is a ModelForm dictionary attribute.
+        url = cleaned_data.get('url')
+        # we use the dictionary.get() method to get the form's value for url
+
+        # if url isn't empty and doesn't start with http://
+        if url and not url.startswith('http://'):
+            url = 'http://' + url
+            # we reassign the value in the dictionary with our new, clean url
+            cleaned_data['url'] = url
+        # we always have to end the clean() method by returning the cleaned_data dictionary.
+        # always, always, always, always, always.
+        return cleaned_data
 
 
 class UserForm(forms.ModelForm):
